@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <style>
+      /* Tooltip width override */
+      :root {
+        --tooltip-width: 10rem;
+      }
+
+      [role="tooltip"],
+      [data-radix-popper-content-wrapper],
+      [data-state="delayed-open"][data-radix-tooltip-content],
+      .radix-tooltip-content {
+        width: var(--tooltip-width) !important;
+        min-width: var(--tooltip-width) !important;
+        max-width: var(--tooltip-width) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Direct tooltip width override
+      document.addEventListener('DOMContentLoaded', () => {
+        // Create an observer to watch for tooltip elements being added to the DOM
+        const observer = new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            if (mutation.addedNodes.length) {
+              for (const node of mutation.addedNodes) {
+                if (node.nodeType === 1) { // Element node
+                  // Check if this is a tooltip or contains tooltips
+                  const tooltips = [...node.querySelectorAll('[role="tooltip"], [data-radix-tooltip-content]')];
+                  if (node.matches('[role="tooltip"], [data-radix-tooltip-content]')) {
+                    tooltips.push(node);
+                  }
+                  
+                  // Apply width to all found tooltips
+                  tooltips.forEach(tooltip => {
+                    tooltip.style.width = '10rem';
+                    tooltip.style.minWidth = '10rem';
+                    tooltip.style.maxWidth = '10rem';
+                  });
+                }
+              }
+            }
+          }
+        });
+        
+        // Start observing the document with the configured parameters
+        observer.observe(document.body, { childList: true, subtree: true });
+        
+        // Also run once on existing tooltips
+        const existingTooltips = document.querySelectorAll('[role="tooltip"], [data-radix-tooltip-content]');
+        existingTooltips.forEach(tooltip => {
+          tooltip.style.width = '10rem';
+          tooltip.style.minWidth = '10rem';
+          tooltip.style.maxWidth = '10rem';
+        });
+      });
+    </script>
+  </body>
+</html>

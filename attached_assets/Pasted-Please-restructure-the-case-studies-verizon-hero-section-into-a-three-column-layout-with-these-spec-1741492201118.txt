@@ -1,0 +1,71 @@
+Please restructure the /case-studies/verizon hero section into a three-column layout with these specifications:
+Hero Section Three-Column Layout
+
+Column Distribution:
+
+First column: 40% of available width
+Second column: 30% of available width
+Third column: 30% of available width
+Set horizontal gaps of 60px between each column
+
+
+First Column Content:
+
+Headline: "How I Designed Verizon's B2B Ecosystem to Achieve an 18% CR Lift"
+Maintain current large font size and left alignment
+Optimize vertical positioning to align with the top of adjacent columns
+
+
+Second Column Content:
+
+Contains only the two new information containers stacked vertically:
+Container 1:
+
+Header: "Problem" (bold font weight)
+Text: "While Verizon's cutting-edge 5G edge solutions enable significant production scaling and resource optimization for mid-to-large-sized businesses. However, there was a crucial gap. To bridge this gap, Verizon needed an ecosystem capable of monetizing these solutions and validating their broad framework."
+
+
+Container 2:
+
+Header: "Solution" (bold font weight)
+Text: "In response, I collaborated closely with a diverse team from Verizon, including stakeholders, the CX team, researchers, and engineers. Our mission was to design a set of dynamic landing pages that would educate and inspire businesses, highlighting the game-changing benefits of 5G Edge solutions and showcasing how these innovations can keep them at the forefront of their industries."
+
+
+
+
+Third Column Content:
+
+Contains the three original information containers stacked vertically:
+Container 1:
+
+Header: "5G Edge Solutions Ecosystem"
+Text: "https://verizon.com/business"
+
+
+Container 2:
+
+Header: "Year"
+Text: "2023"
+
+
+Container 3:
+
+Header: "Intro"
+Text: "Verizon's innovative 5G Edge solutions designed to help businesses scale in the competitive tech industry."
+
+
+
+
+Consistent Container Styling:
+
+Maintain 1px bottom borders on all containers
+Keep 42px vertical spacing between all containers within each column
+Preserve the bold headers and regular weight body text formatting
+Ensure consistent text size hierarchy across all three columns
+
+
+Responsive Behavior:
+
+On tablet/mobile breakpoints, convert to a single column layout
+Stack in this order: headline, problem/solution containers, then the remaining containers
+Maintain appropriate vertical spacing when collapsed

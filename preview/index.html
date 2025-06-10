@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallax Hero Preview</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    h1 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
+    
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      max-height: calc(21.875rem * 0.8 + 5vw);
+      overflow: hidden;
+    }
+    
+    .parallax-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: calc(100% + 55px);
+      bottom: -55px;
+      background-image: url('https://i.imgur.com/xysIQ9k.jpg');
+      background-size: cover;
+      background-position: center 50%;
+      transform: translateY(0);
+      transition: opacity 1s ease-out;
+      will-change: transform, opacity;
+      z-index: 10;
+      animation: parallaxInit 1.2s ease-out forwards;
+    }
+    
+    @keyframes parallaxInit {
+      from {
+        opacity: 0;
+        transform: translateY(55px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .content {
+      min-height: 150vh;
+      padding: 4rem 1rem;
+    }
+    
+    .card {
+      padding: 2rem;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    
+    .implementation-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #2563eb;
+    }
+    
+    .features {
+      list-style-position: inside;
+      margin-bottom: 2rem;
+    }
+    
+    .features li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* JavaScript will add parallax effect */
+  </style>
+</head>
+<body>
+  <div class="hero-container">
+    <div id="parallaxImage" class="parallax-image"></div>
+  </div>
+  
+  <div class="content">
+    <div class="container">
+      <h1>Parallax Hero Image Component</h1>
+      <p>This demonstrates a responsive hero image with parallax scrolling using pure CSS and JavaScript.</p>
+      
+      <div class="card">
+        <h2 class="implementation-title">Implementation Details</h2>
+        <ul class="features">
+          <li>Image height is 350px on desktop, scaling proportionally on smaller screens</li>
+          <li>The bottom 55px of the image is initially cropped/hidden</li>
+          <li>As you scroll, the image moves to reveal its bottom portion</li>
+          <li>The entire image is gradually revealed as the section scrolls out of view</li>
+          <li>Initial load animation fades in the image while briefly revealing the bottom portion</li>
+          <li>Cross-browser compatible including iOS/Safari</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h2 class="implementation-title">Technical Considerations</h2>
+        <h3>Framer Motion Implementation</h3>
+        <ul class="features">
+          <li><strong>Pros:</strong> Smoother animations, declarative API, optimized performance</li>
+          <li><strong>Cons:</strong> Additional dependency, slight SSR complexities</li>
+          <li><strong>Performance:</strong> Uses hardware acceleration and optimized animation scheduling</li>
+          <li><strong>Browser Support:</strong> Excellent cross-browser compatibility with polyfills</li>
+        </ul>
+        
+        <h3>Pure CSS Implementation</h3>
+        <ul class="features">
+          <li><strong>Pros:</strong> No dependencies, full control over animation details</li>
+          <li><strong>Cons:</strong> More complex code, potential for janky scrolling on low-end devices</li>
+          <li><strong>Performance:</strong> Uses <code>willChange</code> for optimization and passive scroll listeners</li>
+          <li><strong>Browser Support:</strong> Uses standard CSS animations with broad compatibility</li>
+        </ul>
+      </div>
+      
+      <div style="height: 50vh; display: flex; align-items: center; justify-content: center; color: #666; border: 1px solid #ddd; border-radius: 8px;">
+        Scroll back up to see the parallax effect
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Simple parallax effect
+    const parallaxImage = document.getElementById('parallaxImage');
+    const heroContainer = document.querySelector('.hero-container');
+    const cropOffset = 55; // 55px crop
+    const sensitivity = 0.8; // Parallax sensitivity
+    
+    function handleScroll() {
+      if (!heroContainer || !parallaxImage) return;
+      
+      const rect = heroContainer.getBoundingClientRect();
+      const distanceFromTop = rect.top;
+      
+      // Calculate maximum movement (to show cropped portion plus some extra)
+      const containerHeight = heroContainer.offsetHeight;
+      const maxMovement = cropOffset + (containerHeight * 0.15 * sensitivity);
+      
+      // Calculate scroll progress (0 to 1)
+      const scrollProgress = Math.min(
+        Math.max(0, -distanceFromTop / (containerHeight * 1.2)), 
+        1
+      );
+      
+      // Apply transform
+      const translateY = scrollProgress * maxMovement;
+      parallaxImage.style.transform = `translateY(${translateY}px)`;
+      
+      // Apply opacity fade
+      const opacity = Math.max(0, 1 - scrollProgress * 1.5);
+      parallaxImage.style.opacity = opacity.toString();
+    }
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial calculation
+    handleScroll();
+  </script>
+</body>
+</html>
